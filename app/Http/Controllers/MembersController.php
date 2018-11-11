@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Member;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MembersController extends Controller
 {
@@ -46,5 +47,35 @@ class MembersController extends Controller
         }
 
         return view('results')->with('members', json_encode($members));
+    }
+
+    /**
+     * Controller for '/graph'
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function displayGraph()
+    {
+        // Query to get the number of signups per year
+        $results = DB::select("
+            SELECT
+                YEAR(created_at) AS year,
+                count(YEAR(created_at)) AS num 
+            FROM
+                members 
+            GROUP BY
+                YEAR(created_at) 
+            HAVING
+                count(*) > 1 
+            ORDER BY
+                year ASC;
+        ");
+        $years = array_column($results, 'year');
+        $num = array_column($results, 'num');
+        $data = [
+            'num' => json_encode($num),
+            'years' => json_encode($years),
+        ];
+
+        return view('graph', compact('data'));
     }
 }
