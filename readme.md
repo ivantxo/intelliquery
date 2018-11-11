@@ -50,7 +50,8 @@ Finally, serve the application:
 php artisan serve
 ```
 
-You will see on the console the URL where you need to open the project in the browser.
+You will see on the console the URL where you need to open the project in the browser usually on
+[127.0.0.1:8000](127.0.0.1:8000)
 
 
 ## Tech Stack for IntelliQuery
