@@ -58973,6 +58973,7 @@ var MemberTable = function (_Component2) {
     value: function render() {
       var filteredSurname = this.props.filteredSurname;
       var filteredFirstName = this.props.filteredFirstName;
+      var filteredEmail = this.props.filteredEmail;
       var rows = [];
 
       this.props.members.map(function (member) {
@@ -58980,6 +58981,9 @@ var MemberTable = function (_Component2) {
           return;
         }
         if (filteredFirstName && member.firstname.indexOf(filteredFirstName) === -1) {
+          return;
+        }
+        if (filteredEmail && member.email.indexOf(filteredEmail) === -1) {
           return;
         }
 
@@ -59052,6 +59056,7 @@ var SearchBar = function (_Component3) {
 
     _this3.handleFilteredSurnameChange = _this3.handleFilteredSurnameChange.bind(_this3);
     _this3.handleFilteredFirstNameChange = _this3.handleFilteredFirstNameChange.bind(_this3);
+    _this3.handleFilteredEmailChange = _this3.handleFilteredEmailChange.bind(_this3);
     return _this3;
   }
 
@@ -59064,6 +59069,11 @@ var SearchBar = function (_Component3) {
     key: 'handleFilteredFirstNameChange',
     value: function handleFilteredFirstNameChange(e) {
       this.props.onFilteredFirstNameChange(e.target.value);
+    }
+  }, {
+    key: 'handleFilteredEmailChange',
+    value: function handleFilteredEmailChange(e) {
+      this.props.onFilteredEmailChange(e.target.value);
     }
   }, {
     key: 'render',
@@ -59083,6 +59093,13 @@ var SearchBar = function (_Component3) {
           placeholder: 'First Name...',
           value: this.props.filteredFirstName,
           onChange: this.handleFilteredFirstNameChange
+        }),
+        '\xA0',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+          type: 'text',
+          placeholder: 'E-Mail...',
+          value: this.props.filteredEmail,
+          onChange: this.handleFilteredEmailChange
         })
       );
     }
@@ -59107,11 +59124,13 @@ var FilterableMemberTable = function (_Component4) {
 
     _this4.state = {
       filteredSurname: '',
-      filteredFirstName: ''
+      filteredFirstName: '',
+      filteredEmail: ''
     };
 
     _this4.handleFilteredSurnameChange = _this4.handleFilteredSurnameChange.bind(_this4);
     _this4.handleFilteredFirstNameChange = _this4.handleFilteredFirstNameChange.bind(_this4);
+    _this4.handleFilteredEmailChange = _this4.handleFilteredEmailChange.bind(_this4);
     return _this4;
   }
 
@@ -59130,6 +59149,13 @@ var FilterableMemberTable = function (_Component4) {
       });
     }
   }, {
+    key: 'handleFilteredEmailChange',
+    value: function handleFilteredEmailChange(filterText) {
+      this.setState({
+        filteredEmail: filterText
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -59145,14 +59171,17 @@ var FilterableMemberTable = function (_Component4) {
               filteredSurname: this.state.filteredSurname,
               onFilteredSurnameChange: this.handleFilteredSurnameChange,
               filteredFirstName: this.state.filteredFirstName,
-              onFilteredFirstNameChange: this.handleFilteredFirstNameChange
+              onFilteredFirstNameChange: this.handleFilteredFirstNameChange,
+              filteredEmail: this.state.filteredEmail,
+              onFilteredEmailChange: this.handleFilteredEmailChange
             })
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MemberTable, {
           members: JSON.parse(this.props.members),
           filteredSurname: this.state.filteredSurname,
-          filteredFirstName: this.state.filteredFirstName
+          filteredFirstName: this.state.filteredFirstName,
+          filteredEmail: this.state.filteredEmail
         }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null)
       );

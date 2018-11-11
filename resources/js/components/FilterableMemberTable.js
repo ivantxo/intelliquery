@@ -26,6 +26,7 @@ class MemberTable extends Component {
   render() {
     const filteredSurname = this.props.filteredSurname;
     const filteredFirstName = this.props.filteredFirstName;
+    const filteredEmail = this.props.filteredEmail;
     const rows = [];
 
     this.props.members.map(member => {
@@ -33,6 +34,9 @@ class MemberTable extends Component {
         return;
       }
       if (filteredFirstName && member.firstname.indexOf(filteredFirstName) === -1) {
+        return;
+      }
+      if (filteredEmail && member.email.indexOf(filteredEmail) === -1) {
         return;
       }
 
@@ -69,6 +73,7 @@ class SearchBar extends Component {
     super(props);
     this.handleFilteredSurnameChange = this.handleFilteredSurnameChange.bind(this);
     this.handleFilteredFirstNameChange = this.handleFilteredFirstNameChange.bind(this);
+    this.handleFilteredEmailChange = this.handleFilteredEmailChange.bind(this);
   }
 
   handleFilteredSurnameChange(e) {
@@ -77,6 +82,10 @@ class SearchBar extends Component {
 
   handleFilteredFirstNameChange(e) {
     this.props.onFilteredFirstNameChange(e.target.value);
+  }
+
+  handleFilteredEmailChange(e) {
+    this.props.onFilteredEmailChange(e.target.value);
   }
 
   render() {
@@ -95,6 +104,13 @@ class SearchBar extends Component {
           value={this.props.filteredFirstName}
           onChange={this.handleFilteredFirstNameChange}
         />
+        &nbsp;
+        <input
+          type="text"
+          placeholder="E-Mail..."
+          value={this.props.filteredEmail}
+          onChange={this.handleFilteredEmailChange}
+        />
       </form>
     );
   }
@@ -110,10 +126,12 @@ class FilterableMemberTable extends Component {
     this.state = {
       filteredSurname: '',
       filteredFirstName: '',
+      filteredEmail: '',
     };
 
     this.handleFilteredSurnameChange = this.handleFilteredSurnameChange.bind(this);
     this.handleFilteredFirstNameChange = this.handleFilteredFirstNameChange.bind(this);
+    this.handleFilteredEmailChange = this.handleFilteredEmailChange.bind(this);
   }
 
   handleFilteredSurnameChange(filterText) {
@@ -128,6 +146,12 @@ class FilterableMemberTable extends Component {
     });
   }
 
+  handleFilteredEmailChange(filterText) {
+    this.setState({
+      filteredEmail: filterText
+    });
+  }
+
   render() {
     return (
       <div>
@@ -138,6 +162,8 @@ class FilterableMemberTable extends Component {
               onFilteredSurnameChange={this.handleFilteredSurnameChange}
               filteredFirstName={this.state.filteredFirstName}
               onFilteredFirstNameChange={this.handleFilteredFirstNameChange}
+              filteredEmail={this.state.filteredEmail}
+              onFilteredEmailChange={this.handleFilteredEmailChange}
             />
           </div>
         </div>
@@ -145,6 +171,7 @@ class FilterableMemberTable extends Component {
           members={JSON.parse(this.props.members)}
           filteredSurname={this.state.filteredSurname}
           filteredFirstName={this.state.filteredFirstName}
+          filteredEmail={this.state.filteredEmail}
         />
         <br />
       </div>
