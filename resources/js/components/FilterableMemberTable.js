@@ -24,12 +24,18 @@ class MemberRow extends Component {
  */
 class MemberTable extends Component {
   render() {
+    const currentPage = this.props.currentPage;
+    const resultsPerPage = this.props.resultsPerPage;
     const filteredSurname = this.props.filteredSurname;
     const filteredFirstName = this.props.filteredFirstName;
     const filteredEmail = this.props.filteredEmail;
     const rows = [];
 
-    this.props.members.map(member => {
+    const indexOfLastResult = currentPage * resultsPerPage;
+    const indexOfFirstResult = indexOfLastResult - resultsPerPage;
+    const currentResults = this.props.members.slice(indexOfFirstResult, indexOfLastResult);
+
+    currentResults.map(member => {
       if (filteredSurname && member.surname.indexOf(filteredSurname) === -1) {
         return;
       }
@@ -127,11 +133,15 @@ class FilterableMemberTable extends Component {
       filteredSurname: '',
       filteredFirstName: '',
       filteredEmail: '',
+      currentPage: 1,
+      resultsPerPage: 20,
     };
 
     this.handleFilteredSurnameChange = this.handleFilteredSurnameChange.bind(this);
     this.handleFilteredFirstNameChange = this.handleFilteredFirstNameChange.bind(this);
     this.handleFilteredEmailChange = this.handleFilteredEmailChange.bind(this);
+    this.handleClickPagination = this.handleClickPagination.bind(this);
+    this.handleChangeEntries = this.handleChangeEntries.bind(this);
   }
 
   handleFilteredSurnameChange(filterText) {
@@ -152,10 +162,33 @@ class FilterableMemberTable extends Component {
     });
   }
 
+  handleClickPagination(e) {
+    this.setState({
+      currentPage: Number(e.target.id)
+    });
+  }
+
+  handleChangeEntries(e) {
+    this.setState({
+      resultsPerPage: Number(e.target.value)
+    });
+  }
+
   render() {
+    const pageNumbersStyle = {
+      listStyle: 'none',
+      display: 'flex',
+      listStylePosition: 'outside',
+    };
+
     return (
       <div>
         <div className="form-group">
+          <div className="float-lg-left">
+            <Entries
+              onChangeEntries={this.handleChangeEntries}
+            />
+          </div>
           <div className="float-lg-right">
             <SearchBar
               filteredSurname={this.state.filteredSurname}
@@ -172,10 +205,92 @@ class FilterableMemberTable extends Component {
           filteredSurname={this.state.filteredSurname}
           filteredFirstName={this.state.filteredFirstName}
           filteredEmail={this.state.filteredEmail}
+          currentPage={this.state.currentPage}
+          resultsPerPage={this.state.resultsPerPage}
         />
         <br />
+        <ul style={pageNumbersStyle}>
+          <PageNumbers
+            totalMembers={JSON.parse(this.props.members).length}
+            resultsPerPage={this.state.resultsPerPage}
+            onClickPagination={this.handleClickPagination}
+          />
+        </ul>
       </div>
     );
+  }
+}
+
+class Entries extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChangeEntries = this.handleChangeEntries.bind(this);
+  }
+
+  handleChangeEntries(e) {
+    this.props.onChangeEntries(e);
+  }
+
+  renderEntries() {
+    const entries = [20, 30, 40, 50];
+    return entries.map(entry => {
+      return(
+        <option key={entry}>{entry}</option>
+      );
+    });
+  }
+
+  render() {
+    return (
+      <div className="border-left form-group">
+        Show
+        <select
+          className="custom-select-sm"
+          onChange={this.handleChangeEntries}
+        >
+          {this.renderEntries()}
+        </select> Entries
+      </div>
+    );
+  }
+}
+
+class PageNumbers extends Component {
+  constructor(props) {
+    super(props);
+    this.handleClickPagination = this.handleClickPagination.bind(this);
+  }
+
+  handleClickPagination(e) {
+    this.props.onClickPagination(e);
+  }
+
+  render() {
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(this.props.totalMembers / this.props.resultsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+
+    const pageNumbersLiStyle = {
+      marginRight: '0.5em',
+      color: 'blue',
+      userSelect: 'none',
+      cursor: 'pointer',
+      fontSize: '0.9em',
+    };
+
+    return pageNumbers.map(number => {
+      return (
+        <li
+          key={number}
+          id={number}
+          style={pageNumbersLiStyle}
+          onClick={this.handleClickPagination}
+        >
+          {number}
+        </li>
+      );
+    });
   }
 }
 

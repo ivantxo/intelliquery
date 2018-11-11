@@ -58971,12 +58971,18 @@ var MemberTable = function (_Component2) {
   _createClass(MemberTable, [{
     key: 'render',
     value: function render() {
+      var currentPage = this.props.currentPage;
+      var resultsPerPage = this.props.resultsPerPage;
       var filteredSurname = this.props.filteredSurname;
       var filteredFirstName = this.props.filteredFirstName;
       var filteredEmail = this.props.filteredEmail;
       var rows = [];
 
-      this.props.members.map(function (member) {
+      var indexOfLastResult = currentPage * resultsPerPage;
+      var indexOfFirstResult = indexOfLastResult - resultsPerPage;
+      var currentResults = this.props.members.slice(indexOfFirstResult, indexOfLastResult);
+
+      currentResults.map(function (member) {
         if (filteredSurname && member.surname.indexOf(filteredSurname) === -1) {
           return;
         }
@@ -59125,12 +59131,16 @@ var FilterableMemberTable = function (_Component4) {
     _this4.state = {
       filteredSurname: '',
       filteredFirstName: '',
-      filteredEmail: ''
+      filteredEmail: '',
+      currentPage: 1,
+      resultsPerPage: 20
     };
 
     _this4.handleFilteredSurnameChange = _this4.handleFilteredSurnameChange.bind(_this4);
     _this4.handleFilteredFirstNameChange = _this4.handleFilteredFirstNameChange.bind(_this4);
     _this4.handleFilteredEmailChange = _this4.handleFilteredEmailChange.bind(_this4);
+    _this4.handleClickPagination = _this4.handleClickPagination.bind(_this4);
+    _this4.handleChangeEntries = _this4.handleChangeEntries.bind(_this4);
     return _this4;
   }
 
@@ -59156,14 +59166,41 @@ var FilterableMemberTable = function (_Component4) {
       });
     }
   }, {
+    key: 'handleClickPagination',
+    value: function handleClickPagination(e) {
+      this.setState({
+        currentPage: Number(e.target.id)
+      });
+    }
+  }, {
+    key: 'handleChangeEntries',
+    value: function handleChangeEntries(e) {
+      this.setState({
+        resultsPerPage: Number(e.target.value)
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var pageNumbersStyle = {
+        listStyle: 'none',
+        display: 'flex',
+        listStylePosition: 'outside'
+      };
+
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'div',
           { className: 'form-group' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'float-lg-left' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Entries, {
+              onChangeEntries: this.handleChangeEntries
+            })
+          ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             'div',
             { className: 'float-lg-right' },
@@ -59181,14 +59218,130 @@ var FilterableMemberTable = function (_Component4) {
           members: JSON.parse(this.props.members),
           filteredSurname: this.state.filteredSurname,
           filteredFirstName: this.state.filteredFirstName,
-          filteredEmail: this.state.filteredEmail
+          filteredEmail: this.state.filteredEmail,
+          currentPage: this.state.currentPage,
+          resultsPerPage: this.state.resultsPerPage
         }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null)
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'ul',
+          { style: pageNumbersStyle },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PageNumbers, {
+            totalMembers: JSON.parse(this.props.members).length,
+            resultsPerPage: this.state.resultsPerPage,
+            onClickPagination: this.handleClickPagination
+          })
+        )
       );
     }
   }]);
 
   return FilterableMemberTable;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+var Entries = function (_Component5) {
+  _inherits(Entries, _Component5);
+
+  function Entries(props) {
+    _classCallCheck(this, Entries);
+
+    var _this5 = _possibleConstructorReturn(this, (Entries.__proto__ || Object.getPrototypeOf(Entries)).call(this, props));
+
+    _this5.handleChangeEntries = _this5.handleChangeEntries.bind(_this5);
+    return _this5;
+  }
+
+  _createClass(Entries, [{
+    key: 'handleChangeEntries',
+    value: function handleChangeEntries(e) {
+      this.props.onChangeEntries(e);
+    }
+  }, {
+    key: 'renderEntries',
+    value: function renderEntries() {
+      var entries = [20, 30, 40, 50];
+      return entries.map(function (entry) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'option',
+          { key: entry },
+          entry
+        );
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'border-left form-group' },
+        'Show',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'select',
+          {
+            className: 'custom-select-sm',
+            onChange: this.handleChangeEntries
+          },
+          this.renderEntries()
+        ),
+        ' Entries'
+      );
+    }
+  }]);
+
+  return Entries;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+var PageNumbers = function (_Component6) {
+  _inherits(PageNumbers, _Component6);
+
+  function PageNumbers(props) {
+    _classCallCheck(this, PageNumbers);
+
+    var _this6 = _possibleConstructorReturn(this, (PageNumbers.__proto__ || Object.getPrototypeOf(PageNumbers)).call(this, props));
+
+    _this6.handleClickPagination = _this6.handleClickPagination.bind(_this6);
+    return _this6;
+  }
+
+  _createClass(PageNumbers, [{
+    key: 'handleClickPagination',
+    value: function handleClickPagination(e) {
+      this.props.onClickPagination(e);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this7 = this;
+
+      var pageNumbers = [];
+      for (var i = 1; i <= Math.ceil(this.props.totalMembers / this.props.resultsPerPage); i++) {
+        pageNumbers.push(i);
+      }
+
+      var pageNumbersLiStyle = {
+        marginRight: '0.5em',
+        color: 'blue',
+        userSelect: 'none',
+        cursor: 'pointer',
+        fontSize: '0.9em'
+      };
+
+      return pageNumbers.map(function (number) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'li',
+          {
+            key: number,
+            id: number,
+            style: pageNumbersLiStyle,
+            onClick: _this7.handleClickPagination
+          },
+          number
+        );
+      });
+    }
+  }]);
+
+  return PageNumbers;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (FilterableMemberTable);
