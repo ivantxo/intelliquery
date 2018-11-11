@@ -63,11 +63,11 @@ class MemberTable extends Component {
 class SearchBar extends Component {
   constructor(props) {
     super(props);
-    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleFilteredSurnameChange = this.handleFilteredSurnameChange.bind(this);
   }
 
-  handleFilterTextChange(e) {
-    this.props.onFilterTextChange(e.target.value);
+  handleFilteredSurnameChange(e) {
+    this.props.onFilteredSurnameChange(e.target.value);
   }
 
   render() {
@@ -75,9 +75,9 @@ class SearchBar extends Component {
       <form>
         <input
           type="text"
-          placeholder="Search..."
-          value={this.props.filterText}
-          onChange={this.handleFilterTextChange}
+          placeholder="Surname..."
+          value={this.props.filteredSurname}
+          onChange={this.handleFilteredSurnameChange}
         />
       </form>
     );
@@ -92,15 +92,15 @@ class FilterableMemberTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterText: '',
+      filteredSurname: '',
     };
 
-    this.handleFilterTextChange = this.handleFilterTextChange.bind(this);
+    this.handleFilteredSurnameChange = this.handleFilteredSurnameChange.bind(this);
   }
 
-  handleFilterTextChange(filterText) {
+  handleFilteredSurnameChange(filterText) {
     this.setState({
-      filterText: filterText
+      filteredSurname: filterText
     });
   }
 
@@ -110,14 +110,14 @@ class FilterableMemberTable extends Component {
         <div className="form-group">
           <div className="float-lg-right">
             <SearchBar
-              filterText={this.state.filterText}
-              onFilterTextChange={this.handleFilterTextChange}
+              filteredSurname={this.state.filteredSurname}
+              onFilteredSurnameChange={this.handleFilteredSurnameChange}
             />
           </div>
         </div>
         <MemberTable
           members={JSON.parse(this.props.members)}
-          filterText={this.state.filterText}
+          filterText={this.state.filteredSurname}
         />
         <br />
       </div>

@@ -59046,14 +59046,14 @@ var SearchBar = function (_Component3) {
 
     var _this3 = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
 
-    _this3.handleFilterTextChange = _this3.handleFilterTextChange.bind(_this3);
+    _this3.handleFilteredSurnameChange = _this3.handleFilteredSurnameChange.bind(_this3);
     return _this3;
   }
 
   _createClass(SearchBar, [{
-    key: 'handleFilterTextChange',
-    value: function handleFilterTextChange(e) {
-      this.props.onFilterTextChange(e.target.value);
+    key: 'handleFilteredSurnameChange',
+    value: function handleFilteredSurnameChange(e) {
+      this.props.onFilteredSurnameChange(e.target.value);
     }
   }, {
     key: 'render',
@@ -59063,9 +59063,9 @@ var SearchBar = function (_Component3) {
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
           type: 'text',
-          placeholder: 'Search...',
-          value: this.props.filterText,
-          onChange: this.handleFilterTextChange
+          placeholder: 'Surname...',
+          value: this.props.filteredSurname,
+          onChange: this.handleFilteredSurnameChange
         })
       );
     }
@@ -59089,18 +59089,18 @@ var FilterableMemberTable = function (_Component4) {
     var _this4 = _possibleConstructorReturn(this, (FilterableMemberTable.__proto__ || Object.getPrototypeOf(FilterableMemberTable)).call(this, props));
 
     _this4.state = {
-      filterText: ''
+      filteredSurname: ''
     };
 
-    _this4.handleFilterTextChange = _this4.handleFilterTextChange.bind(_this4);
+    _this4.handleFilteredSurnameChange = _this4.handleFilteredSurnameChange.bind(_this4);
     return _this4;
   }
 
   _createClass(FilterableMemberTable, [{
-    key: 'handleFilterTextChange',
-    value: function handleFilterTextChange(filterText) {
+    key: 'handleFilteredSurnameChange',
+    value: function handleFilteredSurnameChange(filterText) {
       this.setState({
-        filterText: filterText
+        filteredSurname: filterText
       });
     }
   }, {
@@ -59116,14 +59116,14 @@ var FilterableMemberTable = function (_Component4) {
             'div',
             { className: 'float-lg-right' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchBar, {
-              filterText: this.state.filterText,
-              onFilterTextChange: this.handleFilterTextChange
+              filteredSurname: this.state.filteredSurname,
+              onFilteredSurnameChange: this.handleFilteredSurnameChange
             })
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MemberTable, {
           members: JSON.parse(this.props.members),
-          filterText: this.state.filterText
+          filterText: this.state.filteredSurname
         }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null)
       );
