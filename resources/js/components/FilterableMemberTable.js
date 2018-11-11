@@ -31,6 +31,7 @@ class MemberTable extends Component {
     const filteredEmail = this.props.filteredEmail;
     const rows = [];
 
+    // Calculations to get the results for the requested page of results
     const indexOfLastResult = currentPage * resultsPerPage;
     const indexOfFirstResult = indexOfLastResult - resultsPerPage;
     const currentResults = this.props.members.slice(indexOfFirstResult, indexOfLastResult);
@@ -55,7 +56,7 @@ class MemberTable extends Component {
     });
 
     return (
-      <table>
+      <table className="table table-striped table-bordered table-sm">
         <thead>
         <tr>
           <th>Surname</th>
@@ -221,6 +222,9 @@ class FilterableMemberTable extends Component {
   }
 }
 
+/**
+ * Represents the select box for the number of entries of pagination
+ */
 class Entries extends Component {
   constructor(props) {
     super(props);
@@ -232,7 +236,7 @@ class Entries extends Component {
   }
 
   renderEntries() {
-    const entries = [20, 30, 40, 50];
+    const entries = [20, 30, 40, 50, 1000];
     return entries.map(entry => {
       return(
         <option key={entry}>{entry}</option>
@@ -255,6 +259,9 @@ class Entries extends Component {
   }
 }
 
+/**
+ * Represents the page numbers at the bottom of the member's list
+ */
 class PageNumbers extends Component {
   constructor(props) {
     super(props);

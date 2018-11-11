@@ -58978,6 +58978,7 @@ var MemberTable = function (_Component2) {
       var filteredEmail = this.props.filteredEmail;
       var rows = [];
 
+      // Calculations to get the results for the requested page of results
       var indexOfLastResult = currentPage * resultsPerPage;
       var indexOfFirstResult = indexOfLastResult - resultsPerPage;
       var currentResults = this.props.members.slice(indexOfFirstResult, indexOfLastResult);
@@ -59001,7 +59002,7 @@ var MemberTable = function (_Component2) {
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'table',
-        null,
+        { className: 'table table-striped table-bordered table-sm' },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'thead',
           null,
@@ -59239,6 +59240,11 @@ var FilterableMemberTable = function (_Component4) {
   return FilterableMemberTable;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
+/**
+ * Represents the select box for the number of entries of pagination
+ */
+
+
 var Entries = function (_Component5) {
   _inherits(Entries, _Component5);
 
@@ -59259,7 +59265,7 @@ var Entries = function (_Component5) {
   }, {
     key: 'renderEntries',
     value: function renderEntries() {
-      var entries = [20, 30, 40, 50];
+      var entries = [20, 30, 40, 50, 1000];
       return entries.map(function (entry) {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'option',
@@ -59290,6 +59296,11 @@ var Entries = function (_Component5) {
 
   return Entries;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/**
+ * Represents the page numbers at the bottom of the member's list
+ */
+
 
 var PageNumbers = function (_Component6) {
   _inherits(PageNumbers, _Component6);
