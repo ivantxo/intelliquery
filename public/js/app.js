@@ -58971,11 +58971,15 @@ var MemberTable = function (_Component2) {
   _createClass(MemberTable, [{
     key: 'render',
     value: function render() {
-      var filterText = this.props.filterText;
+      var filteredSurname = this.props.filteredSurname;
+      var filteredFirstName = this.props.filteredFirstName;
       var rows = [];
 
       this.props.members.map(function (member) {
-        if (member.surname.indexOf(filterText) === -1) {
+        if (filteredSurname && member.surname.indexOf(filteredSurname) === -1) {
+          return;
+        }
+        if (filteredFirstName && member.firstname.indexOf(filteredFirstName) === -1) {
           return;
         }
 
@@ -59047,6 +59051,7 @@ var SearchBar = function (_Component3) {
     var _this3 = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
 
     _this3.handleFilteredSurnameChange = _this3.handleFilteredSurnameChange.bind(_this3);
+    _this3.handleFilteredFirstNameChange = _this3.handleFilteredFirstNameChange.bind(_this3);
     return _this3;
   }
 
@@ -59054,6 +59059,11 @@ var SearchBar = function (_Component3) {
     key: 'handleFilteredSurnameChange',
     value: function handleFilteredSurnameChange(e) {
       this.props.onFilteredSurnameChange(e.target.value);
+    }
+  }, {
+    key: 'handleFilteredFirstNameChange',
+    value: function handleFilteredFirstNameChange(e) {
+      this.props.onFilteredFirstNameChange(e.target.value);
     }
   }, {
     key: 'render',
@@ -59066,6 +59076,13 @@ var SearchBar = function (_Component3) {
           placeholder: 'Surname...',
           value: this.props.filteredSurname,
           onChange: this.handleFilteredSurnameChange
+        }),
+        '\xA0',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+          type: 'text',
+          placeholder: 'First Name...',
+          value: this.props.filteredFirstName,
+          onChange: this.handleFilteredFirstNameChange
         })
       );
     }
@@ -59089,10 +59106,12 @@ var FilterableMemberTable = function (_Component4) {
     var _this4 = _possibleConstructorReturn(this, (FilterableMemberTable.__proto__ || Object.getPrototypeOf(FilterableMemberTable)).call(this, props));
 
     _this4.state = {
-      filteredSurname: ''
+      filteredSurname: '',
+      filteredFirstName: ''
     };
 
     _this4.handleFilteredSurnameChange = _this4.handleFilteredSurnameChange.bind(_this4);
+    _this4.handleFilteredFirstNameChange = _this4.handleFilteredFirstNameChange.bind(_this4);
     return _this4;
   }
 
@@ -59101,6 +59120,13 @@ var FilterableMemberTable = function (_Component4) {
     value: function handleFilteredSurnameChange(filterText) {
       this.setState({
         filteredSurname: filterText
+      });
+    }
+  }, {
+    key: 'handleFilteredFirstNameChange',
+    value: function handleFilteredFirstNameChange(filterText) {
+      this.setState({
+        filteredFirstName: filterText
       });
     }
   }, {
@@ -59117,13 +59143,16 @@ var FilterableMemberTable = function (_Component4) {
             { className: 'float-lg-right' },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchBar, {
               filteredSurname: this.state.filteredSurname,
-              onFilteredSurnameChange: this.handleFilteredSurnameChange
+              onFilteredSurnameChange: this.handleFilteredSurnameChange,
+              filteredFirstName: this.state.filteredFirstName,
+              onFilteredFirstNameChange: this.handleFilteredFirstNameChange
             })
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MemberTable, {
           members: JSON.parse(this.props.members),
-          filterText: this.state.filteredSurname
+          filteredSurname: this.state.filteredSurname,
+          filteredFirstName: this.state.filteredFirstName
         }),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null)
       );

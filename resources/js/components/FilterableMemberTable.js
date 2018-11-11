@@ -24,11 +24,15 @@ class MemberRow extends Component {
  */
 class MemberTable extends Component {
   render() {
-    const filterText = this.props.filterText;
+    const filteredSurname = this.props.filteredSurname;
+    const filteredFirstName = this.props.filteredFirstName;
     const rows = [];
 
     this.props.members.map(member => {
-      if (member.surname.indexOf(filterText) === -1) {
+      if (filteredSurname && member.surname.indexOf(filteredSurname) === -1) {
+        return;
+      }
+      if (filteredFirstName && member.firstname.indexOf(filteredFirstName) === -1) {
         return;
       }
 
@@ -64,10 +68,15 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.handleFilteredSurnameChange = this.handleFilteredSurnameChange.bind(this);
+    this.handleFilteredFirstNameChange = this.handleFilteredFirstNameChange.bind(this);
   }
 
   handleFilteredSurnameChange(e) {
     this.props.onFilteredSurnameChange(e.target.value);
+  }
+
+  handleFilteredFirstNameChange(e) {
+    this.props.onFilteredFirstNameChange(e.target.value);
   }
 
   render() {
@@ -78,6 +87,13 @@ class SearchBar extends Component {
           placeholder="Surname..."
           value={this.props.filteredSurname}
           onChange={this.handleFilteredSurnameChange}
+        />
+        &nbsp;
+        <input
+          type="text"
+          placeholder="First Name..."
+          value={this.props.filteredFirstName}
+          onChange={this.handleFilteredFirstNameChange}
         />
       </form>
     );
@@ -93,14 +109,22 @@ class FilterableMemberTable extends Component {
     super(props);
     this.state = {
       filteredSurname: '',
+      filteredFirstName: '',
     };
 
     this.handleFilteredSurnameChange = this.handleFilteredSurnameChange.bind(this);
+    this.handleFilteredFirstNameChange = this.handleFilteredFirstNameChange.bind(this);
   }
 
   handleFilteredSurnameChange(filterText) {
     this.setState({
       filteredSurname: filterText
+    });
+  }
+
+  handleFilteredFirstNameChange(filterText) {
+    this.setState({
+      filteredFirstName: filterText
     });
   }
 
@@ -112,12 +136,15 @@ class FilterableMemberTable extends Component {
             <SearchBar
               filteredSurname={this.state.filteredSurname}
               onFilteredSurnameChange={this.handleFilteredSurnameChange}
+              filteredFirstName={this.state.filteredFirstName}
+              onFilteredFirstNameChange={this.handleFilteredFirstNameChange}
             />
           </div>
         </div>
         <MemberTable
           members={JSON.parse(this.props.members)}
-          filterText={this.state.filteredSurname}
+          filteredSurname={this.state.filteredSurname}
+          filteredFirstName={this.state.filteredFirstName}
         />
         <br />
       </div>
