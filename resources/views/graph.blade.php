@@ -8,10 +8,10 @@
         <br />
         <h2>Graph</h2>
         <div id="years" data="{{ $data['years'] }}"></div>
-        <div id="num" data="{{ $data['num'] }}"></div>
+        <div id="series" data="{{ $data['series'] }}"></div>
     </div>
 
-    <div id="container" style="min-width: 700px; height: 600px; margin: 0 auto"></div>
+    <div id="container" style="min-width: 1400px; height: 800px; margin: 0 auto"></div>
     <script>
         Highcharts.chart('container', {
             chart: {
@@ -20,42 +20,24 @@
             title: {
                 text: 'Signups per year'
             },
-            subtitle: {
-                text: 'Source: IntelliQuery'
-            },
             xAxis: {
-                categories: JSON.parse(document.getElementById('years').getAttribute('data')),
-                // categories: [1970, 1971, 1972],
-                crosshair: true
+                categories: JSON.parse(document.getElementById('years').getAttribute('data'))
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Number of signups'
+                    text: 'Number of Signups'
                 }
             },
-            tooltip: {
-                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
-                footerFormat: '</table>',
-                shared: true,
-                useHTML: true
+            legend: {
+                reversed: true
             },
             plotOptions: {
-                column: {
-                    pointPadding: 0.2,
-                    borderWidth: 0
+                series: {
+                    stacking: 'normal'
                 }
             },
-            series: [
-                {
-                    type: 'column',
-                    colorByPoint: true,
-                    data: JSON.parse(document.getElementById('num').getAttribute('data')),
-                    showInLegend: false
-                }
-            ]
+            series: JSON.parse(document.getElementById('series').getAttribute('data'))
         });
     </script>
 @endsection

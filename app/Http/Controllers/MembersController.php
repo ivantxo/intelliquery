@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Member;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -56,26 +57,85 @@ class MembersController extends Controller
     public function displayGraph()
     {
         // Query to get the number of signups per year
-        $results = DB::select("
-            SELECT
-                YEAR(created_at) AS year,
-                count(YEAR(created_at)) AS num 
-            FROM
-                members 
-            GROUP BY
-                YEAR(created_at) 
-            HAVING
-                count(*) > 1 
-            ORDER BY
-                year ASC;
-        ");
-        $years = array_column($results, 'year');
-        $num = array_column($results, 'num');
+        $results = DB::table('members')
+            ->selectRaw("
+                CONCAT(YEAR(created_at), '-', MONTH(created_at)) AS `date`,
+                COUNT(id) AS `count`
+            ")
+            ->groupBy('date')
+            ->orderBy('date')
+            ->pluck('count', 'date')
+        ;
+        /**
+         Using pluck returns an associative array with yyyy-m key and the number of signups for that particular date
+         $results = [
+             '1970-1' => 2,
+             '1970-10' => 2,
+             '1970-12' => 1
+         ];
+        **/
+        $data = $this->transformResultsToGraphData($results);
+        return view('graph', compact('data'));
+    }
+
+    /**
+     * Transforms the data to the format required by Highcharts in order to draw the chart.
+     * @param array $results
+     * @return array
+     */
+    private function transformResultsToGraphData(array $results): array
+    {
+        $data = [];
+        $template = [1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0, 11 => 0, 12 => 0];
+        foreach ($results as $key => $value) {
+            $aux = explode('-', $key);
+            if (empty($data[$aux[0]])) {
+                /**
+                 * $data[
+                 *  '1970' => [
+                 *    '1' => 0,
+                 *    '2' => 0,
+                 *    ...
+                 *  ]
+                 * ]
+                 */
+                $data[$aux[0]] = $template;
+            }
+            $data[$aux[0]][$aux[1]] = $value;
+        }
+        $years = array_keys($data);
+
+        $months = [
+            1 => 'Jan',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Apr',
+            5 => 'May',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 => 'Aug',
+            9 => 'Sep',
+            10 => 'Oct',
+            11 => 'Nov',
+            12 => 'Dec',
+        ];
+        $series = [];
+        for ($i = 12; $i > 0; $i--) {
+            $aux = [];
+            foreach ($data as $year => $value) {
+                $aux[] = $value[$i];
+            }
+            $obj = new \stdClass();
+            $obj->name = $months[$i];
+            $obj->data = $aux;
+            $series[] = $obj;
+        }
+
         $data = [
-            'num' => json_encode($num),
             'years' => json_encode($years),
+            'series' => json_encode($series),
         ];
 
-        return view('graph', compact('data'));
+        return $data;
     }
 }
