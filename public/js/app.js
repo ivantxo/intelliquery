@@ -13922,7 +13922,7 @@ __webpack_require__(15);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-__webpack_require__(53);
+__webpack_require__(39);
 
 /***/ }),
 /* 15 */
@@ -36157,7 +36157,490 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 39 */,
+/* 39 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+/**
+ * MemberRow represents one single row of the members results
+ */
+
+var MemberRow = function (_Component) {
+  _inherits(MemberRow, _Component);
+
+  function MemberRow() {
+    _classCallCheck(this, MemberRow);
+
+    return _possibleConstructorReturn(this, (MemberRow.__proto__ || Object.getPrototypeOf(MemberRow)).apply(this, arguments));
+  }
+
+  _createClass(MemberRow, [{
+    key: 'render',
+    value: function render() {
+      var member = this.props.member;
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'tr',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'td',
+          null,
+          member.surname
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'td',
+          null,
+          member.firstname
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'td',
+          null,
+          member.gender
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'td',
+          null,
+          member.email
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'td',
+          null,
+          member.created_at
+        )
+      );
+    }
+  }]);
+
+  return MemberRow;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/**
+ * MemberTable represents the table with all the members results
+ */
+
+
+var MemberTable = function (_Component2) {
+  _inherits(MemberTable, _Component2);
+
+  function MemberTable() {
+    _classCallCheck(this, MemberTable);
+
+    return _possibleConstructorReturn(this, (MemberTable.__proto__ || Object.getPrototypeOf(MemberTable)).apply(this, arguments));
+  }
+
+  _createClass(MemberTable, [{
+    key: 'render',
+    value: function render() {
+      var currentPage = this.props.currentPage;
+      var resultsPerPage = this.props.resultsPerPage;
+      var filteredSurname = this.props.filteredSurname.toLowerCase();
+      var filteredFirstName = this.props.filteredFirstName.toLowerCase();
+      var filteredEmail = this.props.filteredEmail;
+      var rows = [];
+
+      // Calculations to get the results for the requested page of results
+      var indexOfLastResult = currentPage * resultsPerPage;
+      var indexOfFirstResult = indexOfLastResult - resultsPerPage;
+      var currentResults = this.props.members.slice(indexOfFirstResult, indexOfLastResult);
+
+      currentResults.map(function (member) {
+        if (filteredSurname && member.surname.toLowerCase().indexOf(filteredSurname) === -1) {
+          return;
+        }
+        if (filteredFirstName && member.firstname.toLowerCase().indexOf(filteredFirstName) === -1) {
+          return;
+        }
+        if (filteredEmail && member.email.indexOf(filteredEmail) === -1) {
+          return;
+        }
+
+        rows.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MemberRow, {
+          member: member,
+          key: member.id
+        }));
+      });
+
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'table',
+        { className: 'table table-striped table-bordered table-sm' },
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'thead',
+          null,
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'tr',
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'th',
+              null,
+              'Surname'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'th',
+              null,
+              'First Name'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'th',
+              null,
+              'Gender'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'th',
+              null,
+              'Email'
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'th',
+              null,
+              'Joined Date'
+            )
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'tbody',
+          null,
+          rows
+        )
+      );
+    }
+  }]);
+
+  return MemberTable;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/**
+ * SearchBar represents the search bar inputs
+ */
+
+
+var SearchBar = function (_Component3) {
+  _inherits(SearchBar, _Component3);
+
+  function SearchBar(props) {
+    _classCallCheck(this, SearchBar);
+
+    var _this3 = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
+
+    _this3.handleFilteredSurnameChange = _this3.handleFilteredSurnameChange.bind(_this3);
+    _this3.handleFilteredFirstNameChange = _this3.handleFilteredFirstNameChange.bind(_this3);
+    _this3.handleFilteredEmailChange = _this3.handleFilteredEmailChange.bind(_this3);
+    return _this3;
+  }
+
+  _createClass(SearchBar, [{
+    key: 'handleFilteredSurnameChange',
+    value: function handleFilteredSurnameChange(e) {
+      this.props.onFilteredSurnameChange(e.target.value);
+    }
+  }, {
+    key: 'handleFilteredFirstNameChange',
+    value: function handleFilteredFirstNameChange(e) {
+      this.props.onFilteredFirstNameChange(e.target.value);
+    }
+  }, {
+    key: 'handleFilteredEmailChange',
+    value: function handleFilteredEmailChange(e) {
+      this.props.onFilteredEmailChange(e.target.value);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'form',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+          type: 'text',
+          placeholder: 'Surname...',
+          value: this.props.filteredSurname,
+          onChange: this.handleFilteredSurnameChange
+        }),
+        '\xA0',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+          type: 'text',
+          placeholder: 'First Name...',
+          value: this.props.filteredFirstName,
+          onChange: this.handleFilteredFirstNameChange
+        }),
+        '\xA0',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
+          type: 'text',
+          placeholder: 'E-Mail...',
+          value: this.props.filteredEmail,
+          onChange: this.handleFilteredEmailChange
+        })
+      );
+    }
+  }]);
+
+  return SearchBar;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/**
+ * FilterableMemberTable uses composition to build the whole component.
+ * This is the parent component.
+ */
+
+
+var FilterableMemberTable = function (_Component4) {
+  _inherits(FilterableMemberTable, _Component4);
+
+  function FilterableMemberTable(props) {
+    _classCallCheck(this, FilterableMemberTable);
+
+    var _this4 = _possibleConstructorReturn(this, (FilterableMemberTable.__proto__ || Object.getPrototypeOf(FilterableMemberTable)).call(this, props));
+
+    _this4.state = {
+      filteredSurname: '',
+      filteredFirstName: '',
+      filteredEmail: '',
+      currentPage: 1,
+      resultsPerPage: 20
+    };
+
+    _this4.handleFilteredSurnameChange = _this4.handleFilteredSurnameChange.bind(_this4);
+    _this4.handleFilteredFirstNameChange = _this4.handleFilteredFirstNameChange.bind(_this4);
+    _this4.handleFilteredEmailChange = _this4.handleFilteredEmailChange.bind(_this4);
+    _this4.handleClickPagination = _this4.handleClickPagination.bind(_this4);
+    _this4.handleChangeEntries = _this4.handleChangeEntries.bind(_this4);
+    return _this4;
+  }
+
+  _createClass(FilterableMemberTable, [{
+    key: 'handleFilteredSurnameChange',
+    value: function handleFilteredSurnameChange(filterText) {
+      this.setState({
+        filteredSurname: filterText
+      });
+    }
+  }, {
+    key: 'handleFilteredFirstNameChange',
+    value: function handleFilteredFirstNameChange(filterText) {
+      this.setState({
+        filteredFirstName: filterText
+      });
+    }
+  }, {
+    key: 'handleFilteredEmailChange',
+    value: function handleFilteredEmailChange(filterText) {
+      this.setState({
+        filteredEmail: filterText
+      });
+    }
+  }, {
+    key: 'handleClickPagination',
+    value: function handleClickPagination(e) {
+      this.setState({
+        currentPage: Number(e.target.id)
+      });
+    }
+  }, {
+    key: 'handleChangeEntries',
+    value: function handleChangeEntries(e) {
+      this.setState({
+        resultsPerPage: Number(e.target.value)
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var pageNumbersStyle = {
+        listStyle: 'none',
+        display: 'flex',
+        listStylePosition: 'outside'
+      };
+
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'div',
+          { className: 'form-group' },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'float-lg-left' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Entries, {
+              onChangeEntries: this.handleChangeEntries
+            })
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            'div',
+            { className: 'float-lg-right' },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchBar, {
+              filteredSurname: this.state.filteredSurname,
+              onFilteredSurnameChange: this.handleFilteredSurnameChange,
+              filteredFirstName: this.state.filteredFirstName,
+              onFilteredFirstNameChange: this.handleFilteredFirstNameChange,
+              filteredEmail: this.state.filteredEmail,
+              onFilteredEmailChange: this.handleFilteredEmailChange
+            })
+          )
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MemberTable, {
+          members: JSON.parse(this.props.members),
+          filteredSurname: this.state.filteredSurname,
+          filteredFirstName: this.state.filteredFirstName,
+          filteredEmail: this.state.filteredEmail,
+          currentPage: this.state.currentPage,
+          resultsPerPage: this.state.resultsPerPage
+        }),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'ul',
+          { style: pageNumbersStyle },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PageNumbers, {
+            totalMembers: JSON.parse(this.props.members).length,
+            resultsPerPage: this.state.resultsPerPage,
+            onClickPagination: this.handleClickPagination
+          })
+        )
+      );
+    }
+  }]);
+
+  return FilterableMemberTable;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/**
+ * Represents the select box for the number of entries of pagination
+ */
+
+
+var Entries = function (_Component5) {
+  _inherits(Entries, _Component5);
+
+  function Entries(props) {
+    _classCallCheck(this, Entries);
+
+    var _this5 = _possibleConstructorReturn(this, (Entries.__proto__ || Object.getPrototypeOf(Entries)).call(this, props));
+
+    _this5.handleChangeEntries = _this5.handleChangeEntries.bind(_this5);
+    return _this5;
+  }
+
+  _createClass(Entries, [{
+    key: 'handleChangeEntries',
+    value: function handleChangeEntries(e) {
+      this.props.onChangeEntries(e);
+    }
+  }, {
+    key: 'renderEntries',
+    value: function renderEntries() {
+      var entries = [20, 30, 40, 50, 1000];
+      return entries.map(function (entry) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'option',
+          { key: entry },
+          entry
+        );
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        { className: 'border-left form-group' },
+        'Show',
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'select',
+          {
+            className: 'custom-select-sm',
+            onChange: this.handleChangeEntries
+          },
+          this.renderEntries()
+        ),
+        ' Entries'
+      );
+    }
+  }]);
+
+  return Entries;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/**
+ * Represents the page numbers at the bottom of the member's list
+ */
+
+
+var PageNumbers = function (_Component6) {
+  _inherits(PageNumbers, _Component6);
+
+  function PageNumbers(props) {
+    _classCallCheck(this, PageNumbers);
+
+    var _this6 = _possibleConstructorReturn(this, (PageNumbers.__proto__ || Object.getPrototypeOf(PageNumbers)).call(this, props));
+
+    _this6.handleClickPagination = _this6.handleClickPagination.bind(_this6);
+    return _this6;
+  }
+
+  _createClass(PageNumbers, [{
+    key: 'handleClickPagination',
+    value: function handleClickPagination(e) {
+      this.props.onClickPagination(e);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this7 = this;
+
+      var pageNumbers = [];
+      for (var i = 1; i <= Math.ceil(this.props.totalMembers / this.props.resultsPerPage); i++) {
+        pageNumbers.push(i);
+      }
+
+      var pageNumbersLiStyle = {
+        marginRight: '0.5em',
+        color: 'blue',
+        userSelect: 'none',
+        cursor: 'pointer',
+        fontSize: '0.9em'
+      };
+
+      return pageNumbers.map(function (number) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          'li',
+          {
+            key: number,
+            id: number,
+            style: pageNumbersLiStyle,
+            onClick: _this7.handleClickPagination
+          },
+          number
+        );
+      });
+    }
+  }]);
+
+  return PageNumbers;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (FilterableMemberTable);
+
+if (document.getElementById('root')) {
+  var members = document.getElementById('root').getAttribute('results');
+
+  __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FilterableMemberTable, {
+    members: members
+  }), document.getElementById('root'));
+}
+
+/***/ }),
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -58876,494 +59359,6 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-/**
- * MemberRow represents one single row of the members results
- */
-
-var MemberRow = function (_Component) {
-  _inherits(MemberRow, _Component);
-
-  function MemberRow() {
-    _classCallCheck(this, MemberRow);
-
-    return _possibleConstructorReturn(this, (MemberRow.__proto__ || Object.getPrototypeOf(MemberRow)).apply(this, arguments));
-  }
-
-  _createClass(MemberRow, [{
-    key: 'render',
-    value: function render() {
-      var member = this.props.member;
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'tr',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'td',
-          null,
-          member.surname
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'td',
-          null,
-          member.firstname
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'td',
-          null,
-          member.gender
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'td',
-          null,
-          member.email
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'td',
-          null,
-          member.created_at
-        )
-      );
-    }
-  }]);
-
-  return MemberRow;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/**
- * MemberTable represents the table with all the members results
- */
-
-
-var MemberTable = function (_Component2) {
-  _inherits(MemberTable, _Component2);
-
-  function MemberTable() {
-    _classCallCheck(this, MemberTable);
-
-    return _possibleConstructorReturn(this, (MemberTable.__proto__ || Object.getPrototypeOf(MemberTable)).apply(this, arguments));
-  }
-
-  _createClass(MemberTable, [{
-    key: 'render',
-    value: function render() {
-      var currentPage = this.props.currentPage;
-      var resultsPerPage = this.props.resultsPerPage;
-      var filteredSurname = this.props.filteredSurname;
-      var filteredFirstName = this.props.filteredFirstName;
-      var filteredEmail = this.props.filteredEmail;
-      var rows = [];
-
-      // Calculations to get the results for the requested page of results
-      var indexOfLastResult = currentPage * resultsPerPage;
-      var indexOfFirstResult = indexOfLastResult - resultsPerPage;
-      var currentResults = this.props.members.slice(indexOfFirstResult, indexOfLastResult);
-
-      currentResults.map(function (member) {
-        if (filteredSurname && member.surname.indexOf(filteredSurname) === -1) {
-          return;
-        }
-        if (filteredFirstName && member.firstname.indexOf(filteredFirstName) === -1) {
-          return;
-        }
-        if (filteredEmail && member.email.indexOf(filteredEmail) === -1) {
-          return;
-        }
-
-        rows.push(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MemberRow, {
-          member: member,
-          key: member.id
-        }));
-      });
-
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'table',
-        { className: 'table table-striped table-bordered table-sm' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'thead',
-          null,
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'tr',
-            null,
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'th',
-              null,
-              'Surname'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'th',
-              null,
-              'First Name'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'th',
-              null,
-              'Gender'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'th',
-              null,
-              'Email'
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              'th',
-              null,
-              'Joined Date'
-            )
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'tbody',
-          null,
-          rows
-        )
-      );
-    }
-  }]);
-
-  return MemberTable;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/**
- * SearchBar represents the search bar inputs
- */
-
-
-var SearchBar = function (_Component3) {
-  _inherits(SearchBar, _Component3);
-
-  function SearchBar(props) {
-    _classCallCheck(this, SearchBar);
-
-    var _this3 = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
-
-    _this3.handleFilteredSurnameChange = _this3.handleFilteredSurnameChange.bind(_this3);
-    _this3.handleFilteredFirstNameChange = _this3.handleFilteredFirstNameChange.bind(_this3);
-    _this3.handleFilteredEmailChange = _this3.handleFilteredEmailChange.bind(_this3);
-    return _this3;
-  }
-
-  _createClass(SearchBar, [{
-    key: 'handleFilteredSurnameChange',
-    value: function handleFilteredSurnameChange(e) {
-      this.props.onFilteredSurnameChange(e.target.value);
-    }
-  }, {
-    key: 'handleFilteredFirstNameChange',
-    value: function handleFilteredFirstNameChange(e) {
-      this.props.onFilteredFirstNameChange(e.target.value);
-    }
-  }, {
-    key: 'handleFilteredEmailChange',
-    value: function handleFilteredEmailChange(e) {
-      this.props.onFilteredEmailChange(e.target.value);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'form',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-          type: 'text',
-          placeholder: 'Surname...',
-          value: this.props.filteredSurname,
-          onChange: this.handleFilteredSurnameChange
-        }),
-        '\xA0',
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-          type: 'text',
-          placeholder: 'First Name...',
-          value: this.props.filteredFirstName,
-          onChange: this.handleFilteredFirstNameChange
-        }),
-        '\xA0',
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', {
-          type: 'text',
-          placeholder: 'E-Mail...',
-          value: this.props.filteredEmail,
-          onChange: this.handleFilteredEmailChange
-        })
-      );
-    }
-  }]);
-
-  return SearchBar;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/**
- * FilterableMemberTable uses composition to build the whole component.
- * This is the parent component.
- */
-
-
-var FilterableMemberTable = function (_Component4) {
-  _inherits(FilterableMemberTable, _Component4);
-
-  function FilterableMemberTable(props) {
-    _classCallCheck(this, FilterableMemberTable);
-
-    var _this4 = _possibleConstructorReturn(this, (FilterableMemberTable.__proto__ || Object.getPrototypeOf(FilterableMemberTable)).call(this, props));
-
-    _this4.state = {
-      filteredSurname: '',
-      filteredFirstName: '',
-      filteredEmail: '',
-      currentPage: 1,
-      resultsPerPage: 20
-    };
-
-    _this4.handleFilteredSurnameChange = _this4.handleFilteredSurnameChange.bind(_this4);
-    _this4.handleFilteredFirstNameChange = _this4.handleFilteredFirstNameChange.bind(_this4);
-    _this4.handleFilteredEmailChange = _this4.handleFilteredEmailChange.bind(_this4);
-    _this4.handleClickPagination = _this4.handleClickPagination.bind(_this4);
-    _this4.handleChangeEntries = _this4.handleChangeEntries.bind(_this4);
-    return _this4;
-  }
-
-  _createClass(FilterableMemberTable, [{
-    key: 'handleFilteredSurnameChange',
-    value: function handleFilteredSurnameChange(filterText) {
-      this.setState({
-        filteredSurname: filterText
-      });
-    }
-  }, {
-    key: 'handleFilteredFirstNameChange',
-    value: function handleFilteredFirstNameChange(filterText) {
-      this.setState({
-        filteredFirstName: filterText
-      });
-    }
-  }, {
-    key: 'handleFilteredEmailChange',
-    value: function handleFilteredEmailChange(filterText) {
-      this.setState({
-        filteredEmail: filterText
-      });
-    }
-  }, {
-    key: 'handleClickPagination',
-    value: function handleClickPagination(e) {
-      this.setState({
-        currentPage: Number(e.target.id)
-      });
-    }
-  }, {
-    key: 'handleChangeEntries',
-    value: function handleChangeEntries(e) {
-      this.setState({
-        resultsPerPage: Number(e.target.value)
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var pageNumbersStyle = {
-        listStyle: 'none',
-        display: 'flex',
-        listStylePosition: 'outside'
-      };
-
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'div',
-          { className: 'form-group' },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            { className: 'float-lg-left' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Entries, {
-              onChangeEntries: this.handleChangeEntries
-            })
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            { className: 'float-lg-right' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SearchBar, {
-              filteredSurname: this.state.filteredSurname,
-              onFilteredSurnameChange: this.handleFilteredSurnameChange,
-              filteredFirstName: this.state.filteredFirstName,
-              onFilteredFirstNameChange: this.handleFilteredFirstNameChange,
-              filteredEmail: this.state.filteredEmail,
-              onFilteredEmailChange: this.handleFilteredEmailChange
-            })
-          )
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(MemberTable, {
-          members: JSON.parse(this.props.members),
-          filteredSurname: this.state.filteredSurname,
-          filteredFirstName: this.state.filteredFirstName,
-          filteredEmail: this.state.filteredEmail,
-          currentPage: this.state.currentPage,
-          resultsPerPage: this.state.resultsPerPage
-        }),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'ul',
-          { style: pageNumbersStyle },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(PageNumbers, {
-            totalMembers: JSON.parse(this.props.members).length,
-            resultsPerPage: this.state.resultsPerPage,
-            onClickPagination: this.handleClickPagination
-          })
-        )
-      );
-    }
-  }]);
-
-  return FilterableMemberTable;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/**
- * Represents the select box for the number of entries of pagination
- */
-
-
-var Entries = function (_Component5) {
-  _inherits(Entries, _Component5);
-
-  function Entries(props) {
-    _classCallCheck(this, Entries);
-
-    var _this5 = _possibleConstructorReturn(this, (Entries.__proto__ || Object.getPrototypeOf(Entries)).call(this, props));
-
-    _this5.handleChangeEntries = _this5.handleChangeEntries.bind(_this5);
-    return _this5;
-  }
-
-  _createClass(Entries, [{
-    key: 'handleChangeEntries',
-    value: function handleChangeEntries(e) {
-      this.props.onChangeEntries(e);
-    }
-  }, {
-    key: 'renderEntries',
-    value: function renderEntries() {
-      var entries = [20, 30, 40, 50, 1000];
-      return entries.map(function (entry) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'option',
-          { key: entry },
-          entry
-        );
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'border-left form-group' },
-        'Show',
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'select',
-          {
-            className: 'custom-select-sm',
-            onChange: this.handleChangeEntries
-          },
-          this.renderEntries()
-        ),
-        ' Entries'
-      );
-    }
-  }]);
-
-  return Entries;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/**
- * Represents the page numbers at the bottom of the member's list
- */
-
-
-var PageNumbers = function (_Component6) {
-  _inherits(PageNumbers, _Component6);
-
-  function PageNumbers(props) {
-    _classCallCheck(this, PageNumbers);
-
-    var _this6 = _possibleConstructorReturn(this, (PageNumbers.__proto__ || Object.getPrototypeOf(PageNumbers)).call(this, props));
-
-    _this6.handleClickPagination = _this6.handleClickPagination.bind(_this6);
-    return _this6;
-  }
-
-  _createClass(PageNumbers, [{
-    key: 'handleClickPagination',
-    value: function handleClickPagination(e) {
-      this.props.onClickPagination(e);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this7 = this;
-
-      var pageNumbers = [];
-      for (var i = 1; i <= Math.ceil(this.props.totalMembers / this.props.resultsPerPage); i++) {
-        pageNumbers.push(i);
-      }
-
-      var pageNumbersLiStyle = {
-        marginRight: '0.5em',
-        color: 'blue',
-        userSelect: 'none',
-        cursor: 'pointer',
-        fontSize: '0.9em'
-      };
-
-      return pageNumbers.map(function (number) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'li',
-          {
-            key: number,
-            id: number,
-            style: pageNumbersLiStyle,
-            onClick: _this7.handleClickPagination
-          },
-          number
-        );
-      });
-    }
-  }]);
-
-  return PageNumbers;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (FilterableMemberTable);
-
-if (document.getElementById('root')) {
-  var members = document.getElementById('root').getAttribute('results');
-
-  __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(FilterableMemberTable, {
-    members: members
-  }), document.getElementById('root'));
-}
 
 /***/ })
 /******/ ]);

@@ -26,8 +26,8 @@ class MemberTable extends Component {
   render() {
     const currentPage = this.props.currentPage;
     const resultsPerPage = this.props.resultsPerPage;
-    const filteredSurname = this.props.filteredSurname;
-    const filteredFirstName = this.props.filteredFirstName;
+    const filteredSurname = this.props.filteredSurname.toLowerCase();
+    const filteredFirstName = this.props.filteredFirstName.toLowerCase();
     const filteredEmail = this.props.filteredEmail;
     const rows = [];
 
@@ -37,10 +37,10 @@ class MemberTable extends Component {
     const currentResults = this.props.members.slice(indexOfFirstResult, indexOfLastResult);
 
     currentResults.map(member => {
-      if (filteredSurname && member.surname.indexOf(filteredSurname) === -1) {
+      if (filteredSurname && member.surname.toLowerCase().indexOf(filteredSurname) === -1) {
         return;
       }
-      if (filteredFirstName && member.firstname.indexOf(filteredFirstName) === -1) {
+      if (filteredFirstName && member.firstname.toLowerCase().indexOf(filteredFirstName) === -1) {
         return;
       }
       if (filteredEmail && member.email.indexOf(filteredEmail) === -1) {
