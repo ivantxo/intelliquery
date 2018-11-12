@@ -80,10 +80,10 @@ class MembersController extends Controller
 
     /**
      * Transforms the data to the format required by Highcharts in order to draw the chart.
-     * @param array $results
+     * @param $results
      * @return array
      */
-    private function transformResultsToGraphData(array $results): array
+    private function transformResultsToGraphData($results): array
     {
         $data = [];
         $template = [1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0, 8 => 0, 9 => 0, 10 => 0, 11 => 0, 12 => 0];
