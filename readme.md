@@ -85,3 +85,14 @@ You will see on the console the URL where you need to open the project in the br
     - components
       - FilterableMemberTable.js
  
+## Note:
+I followed a slightly different approach on how I was instructed to do this task. In your instructions you said the user 
+should be able to visit this URL: https://intellipharm.com.au/devtest/index.php?firstname=Phyllida&surname=Josey
+and get a JSON view of the data.
+
+Instead of typing the URL straight away I created a form in where the user can fill the 3 parameters or none in order 
+to filter the returned data. To get to this page click on the main page on the Query link.
+
+Once you get to the Query Parameters page. You can type any of the 3 parameters or none of them. If you type any of
+the 3 parameters, it will display data filtered by those parameters. On the other you can see all the results by 
+sending an empty query (not filling in any of the fields).
